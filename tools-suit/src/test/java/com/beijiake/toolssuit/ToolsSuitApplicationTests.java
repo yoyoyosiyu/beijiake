@@ -1,4 +1,4 @@
-package com.beijiake.commandlinetools;
+package com.beijiake.toolssuit;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CommandLineToolsApplicationTests {
+public class ToolsSuitApplicationTests {
 
     @Test
     public void contextLoads() {

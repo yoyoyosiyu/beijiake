@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Tools Suit</title>
+</head>
+<body>
+
+    <h2>BCrypt Encode the password</h2>
+
+    <form method="post">
+        <table style="font-size:12px">
+            <tbody>
+                <tr>
+                    <td>Password To Encode</td>
+                    <td><input placeholder="please input the password to encode" name="password" type="text" th:value="${param.password}"/></td>
+                </tr>
+                <tr th:if="${encode}">
+                    <td>result</td>
+                    <td th:text="${encode}"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="submit"></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</body>
+</html>
