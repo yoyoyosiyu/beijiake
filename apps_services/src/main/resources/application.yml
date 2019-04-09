@@ -1,5 +1,5 @@
 server:
-  port: 9002
+  port: 9001
 
 spring:
   security:
@@ -17,5 +17,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+#    show-sql: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+url-patterns:
+  secured: "/secured"
+  public: "/pub"

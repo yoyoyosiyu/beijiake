@@ -11,10 +11,13 @@
 
     <modules>
         <module>author_server</module>
+        <module>apps_services</module>
         <module>resource-server-test</module>
         <module>schedule_task</module>
         <module>tools-suit</module>
+        <module>repository</module>
         <module>data</module>
+        <module>repository</module>
     </modules>
 
 

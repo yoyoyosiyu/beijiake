@@ -42,7 +42,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 //    @Bean
 //    @ConfigurationProperties(prefix = "spring.datasource")
-//    public DataSource oauthDataSource() {
+//    pub DataSource oauthDataSource() {
 //        return DataSourceBuilder.create().build();
 //    }
 
