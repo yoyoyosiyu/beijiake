@@ -12,6 +12,7 @@
     <modules>
         <module>author_server</module>
         <module>apps_services</module>
+        <module>console_services</module>
         <module>resource-server-test</module>
         <module>schedule_task</module>
         <module>tools-suit</module>

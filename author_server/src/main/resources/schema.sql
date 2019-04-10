@@ -71,3 +71,22 @@ create table oauth_approvals (
     expiresAt DATETIME,
     lastModifiedAt DATETIME
 );
+
+CREATE TABLE `privileges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `meta` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `authority_privilege` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `authority_id` int(11) DEFAULT NULL,
+  `privilege_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_AUTHORITY_idx` (`authority_id`),
+  KEY `FK_PRIVILEGE_idx` (`privilege_id`),
+  CONSTRAINT `FK_AUTHORITY` FOREIGN KEY (`authority_id`) REFERENCES `authority` (`id`),
+  CONSTRAINT `FK_PRIVILEGE` FOREIGN KEY (`privilege_id`) REFERENCES `privileges` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

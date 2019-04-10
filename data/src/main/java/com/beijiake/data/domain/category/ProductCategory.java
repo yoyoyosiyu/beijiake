@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.Collections;
@@ -35,4 +36,8 @@ public class ProductCategory {
     @JsonManagedReference
     @OrderBy("id")
     public Set<ProductCategory> childCategories = Collections.emptySet();
+
+    @Column
+    @ColumnDefault("true")
+    boolean inheritAttribute;
 }

@@ -17,6 +17,6 @@ public class CategoryController {
     @CrossOrigin
     @GetMapping("/{id}")
     public ProductCategory doGet(@PathVariable("id")Long id) {
-        return productCategoryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return productCategoryRepository.findById(id).orElseThrow(()-> new EntityNotFoundException(String.format("category with id %d does not exist", id)));
     }
 }

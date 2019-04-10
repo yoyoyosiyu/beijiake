@@ -1,11 +1,12 @@
-package com.beijiake.apps_services.config;
+package com.beijiake.console_services.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -16,7 +17,6 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableResourceServer
 public class ResourceConfig extends ResourceServerConfigurerAdapter {
 
@@ -41,6 +41,11 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
         return new JdbcTokenStore(oauthDataSource());
     }
 
+    @Bean
+    AccessDecisionManager accessDecisionManager() {
+        return new MyAccessDecisionManager(oauthDataSource());
+    }
+
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -49,11 +54,6 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/pub/**").permitAll()
-                .antMatchers("/authority/**").access("hasAnyAuthority('USER', 'ADMIN') and #oauth2.hasScope('agency')")
-                .antMatchers("/secured/**").access("#oauth2.hasScope('management')")
-                .anyRequest().authenticated();
-
-        //http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.authorizeRequests().anyRequest().authenticated().accessDecisionManager(accessDecisionManager());
     }
 }

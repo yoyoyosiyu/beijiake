@@ -1,5 +1,6 @@
 server:
-  port: 9001
+  port: 9002
+
 
 spring:
   security:
@@ -10,6 +11,7 @@ spring:
   #    initialization-mode: always
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test
     jdbcUrl: jdbc:mysql://localhost:3306/test
     username: root
     password: beijiake
@@ -17,10 +19,5 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-#    show-sql: true
+    #    show-sql: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-
-url-patterns:
-  authority: "/authority"
-  secured: "/secured"
-  public: "/pub"
