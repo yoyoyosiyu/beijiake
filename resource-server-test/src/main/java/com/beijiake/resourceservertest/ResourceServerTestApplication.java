@@ -9,7 +9,6 @@ import java.security.Principal;
 
 
 @SpringBootApplication
-@EntityScan(basePackages = {"com.beijiake.data.domain"})
 public class ResourceServerTestApplication {
 
     public static void main(String[] args) {

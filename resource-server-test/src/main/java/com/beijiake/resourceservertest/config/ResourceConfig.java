@@ -38,14 +38,16 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        resources.tokenStore(tokenStore()).resourceId("oauth2");
+        //resources.tokenStore(tokenStore()).resourceId("oauth2");
+        resources.resourceId("oauth2");
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers("/client/**").hasAuthority("CLIENT");
+                .antMatchers("/client/**").hasAuthority("CLIENT")
+                .anyRequest().authenticated();
 
         //http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
