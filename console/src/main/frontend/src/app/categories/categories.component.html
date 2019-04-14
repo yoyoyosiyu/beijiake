@@ -1,0 +1,71 @@
+<nz-page-header nzTitle="产品分类管理">
+  <nz-page-header-content>
+    <div class="wrap">
+      <div class="content">
+        <div class="content">
+          <p>产品分类管理通过将产品按照不同的分类进行分割，并且通过设置分类的特定属性和规格来进行更好的对产品进行设置，以便于更好的数据过滤和搜索</p>
+        </div>
+      </div>
+    </div>
+  </nz-page-header-content>
+</nz-page-header>
+
+<nz-content style="margin: 24px 24px">
+
+  <div>
+    <h3>Hello World!</h3>
+  </div>
+
+  <div>
+    <button (click)="showModal()">Add</button>
+    <nz-modal
+      nzWrapClassName="vertical-center-modal"
+      [(nzVisible)]="isModalVisible"
+      nzTitle="增加新的分类"
+      (nzOnCancel)="handleCancel()"
+      (nzOnOk)="handleOk()"
+    >
+      <input nz-input placeholder="分类名称" [(ngModel)]="newCategoryName" />
+    </nz-modal>
+  </div>
+
+  <div style="background-color: #fff">
+    <nz-table
+      #rowSelectionTable
+      nzShowSizeChanger
+      [nzData]="listOfAllData"
+      (nzCurrentPageDataChange)="currentPageDataChange($event)"
+      nzPageSize="100"
+      nzHideOnSinglePage="true"
+    >
+      <thead>
+      <tr>
+        <th width="32px"
+          nzShowCheckbox
+          nzShowRowSelection
+          [nzSelections]="listOfSelection"
+          [(nzChecked)]="isAllDisplayDataChecked"
+          [nzIndeterminate]="isIndeterminate"
+          (nzCheckedChange)="checkAll($event)"
+        ></th>
+        <th width="64px">ID</th>
+        <th>分类名称</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of listOfAllData">
+        <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+        <td>{{ data.id }}</td>
+        <td><a [href]="'/categories/'+data.id">{{ data.name }}</a></td>
+        <td></td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+
+</nz-content>
+
+
+
+

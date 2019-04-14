@@ -1,7 +1,7 @@
 package com.beijiake.apps_services.web.category.pub;
 
-import com.beijiake.data.domain.category.ProductCategory;
-import com.beijiake.repository.category.ProductCategoryRepository;
+import com.beijiake.data.domain.category.Category;
+import com.beijiake.repository.category.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +12,11 @@ import javax.persistence.EntityNotFoundException;
 public class CategoryController {
 
     @Autowired
-    ProductCategoryRepository productCategoryRepository;
+    CategoryRepository categoryRepository;
 
     @CrossOrigin
     @GetMapping("/{id}")
-    public ProductCategory doGet(@PathVariable("id")Long id) {
-        return productCategoryRepository.findById(id).orElseThrow(()-> new EntityNotFoundException(String.format("category with id %d does not exist", id)));
+    public Category doGet(@PathVariable("id")Long id) {
+        return categoryRepository.findById(id).orElseThrow(()-> new EntityNotFoundException(String.format("category with id %d does not exist", id)));
     }
 }

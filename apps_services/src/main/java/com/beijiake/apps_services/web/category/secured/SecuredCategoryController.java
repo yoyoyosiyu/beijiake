@@ -2,8 +2,8 @@ package com.beijiake.apps_services.web.category.secured;
 
 
 import com.beijiake.apps_services.exception.ReferenceViolationException;
-import com.beijiake.data.domain.category.ProductCategory;
-import com.beijiake.repository.category.ProductCategoryRepository;
+import com.beijiake.data.domain.category.Category;
+import com.beijiake.repository.category.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ import java.util.Set;
 public class SecuredCategoryController {
 
     @Autowired
-    ProductCategoryRepository productCategoryRepository;
+    CategoryRepository productCategoryRepository;
 
     @GetMapping
     public String doGet() {
@@ -49,7 +49,7 @@ public class SecuredCategoryController {
      * }
      */
     @PostMapping
-    public ProductCategory doPost(@RequestBody ProductCategory productCategory) {
+    public Category doPost(@RequestBody Category productCategory) {
 
         return productCategoryRepository.save(productCategory);
     }
@@ -62,17 +62,17 @@ public class SecuredCategoryController {
      * 在指定的分类下面添加分类，支持添加多个分类
      */
     @PostMapping("/{id}")
-    public  Set<ProductCategory> addCategory(@PathVariable(name="id")Long id, @RequestBody Set<ProductCategory> categories) {
+    public  Set<Category> addCategory(@PathVariable(name="id")Long id, @RequestBody Set<Category> categories) {
 
         if (categories.isEmpty()) return Collections.emptySet();
 
-        ProductCategory productCategory = productCategoryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Category productCategory = productCategoryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
-        Set<ProductCategory> results = new HashSet<>();
+        Set<Category> results = new HashSet<>();
 
         categories.forEach((category) ->{
             category.setParent(productCategory);
-            category.setChildCategories(Collections.emptySet());
+            category.setChildren(Collections.emptySet());
             results.add(productCategoryRepository.save(category));
         });
 
@@ -97,9 +97,9 @@ public class SecuredCategoryController {
 
     private void deleteCategory(Long id, boolean recurse) {
 
-        ProductCategory productCategory =  productCategoryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Category productCategory =  productCategoryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
-        Set<ProductCategory> childCategories = productCategory.getChildCategories();
+        Set<Category> childCategories = productCategory.getChildren();
 
         if (childCategories == null || childCategories.isEmpty())
         {

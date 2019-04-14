@@ -50,7 +50,7 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/pub/**").permitAll()
-                .antMatchers("/authority/**").access("hasAnyAuthority('USER', 'ADMIN') and #oauth2.hasScope('agency')")
+                .antMatchers("/authority/**").access("hasAnyAuthority('USER', 'ADMIN', 'CLIENT') and #oauth2.hasScope('agency')")
                 .antMatchers("/secured/**").access("#oauth2.hasScope('management')")
                 .anyRequest().authenticated();
 

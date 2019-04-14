@@ -12,10 +12,10 @@ import java.util.Collections;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(exclude = "childCategories")
+@EqualsAndHashCode(exclude = "children")
 @Entity
-@Table(name = "product_categories")
-public class ProductCategory {
+@Table(name = "categories")
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,16 +26,16 @@ public class ProductCategory {
     public String name;
 
     @ManyToOne
-    @JoinTable(name ="product_category_relation",
+    @JoinTable(name ="category_relation",
     joinColumns = {@JoinColumn(name = "category_id")}, inverseJoinColumns = {@JoinColumn(name="parent_id")})
     @JsonBackReference
-    ProductCategory parent;
+    Category parent;
 
 
     @OneToMany(mappedBy = "parent")
     @JsonManagedReference
     @OrderBy("id")
-    public Set<ProductCategory> childCategories = Collections.emptySet();
+    public Set<Category> children = Collections.emptySet();
 
     @Column
     @ColumnDefault("true")

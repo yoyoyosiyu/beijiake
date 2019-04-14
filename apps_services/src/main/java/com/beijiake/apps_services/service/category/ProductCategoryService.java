@@ -1,9 +1,10 @@
 package com.beijiake.apps_services.service.category;
 
 import com.beijiake.data.domain.attribute.Attribute;
-import com.beijiake.data.domain.category.ProductCategory;
+import com.beijiake.data.domain.category.Category;
 import com.beijiake.repository.attribute.AttributeRepository;
-import com.beijiake.repository.category.ProductCategoryRepository;
+
+import com.beijiake.repository.category.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +15,16 @@ import java.util.List;
 public class ProductCategoryService {
 
     @Autowired
-    ProductCategoryRepository productCategoryRepository;
+    CategoryRepository CategoryRepository;
 
     @Autowired
     AttributeRepository attributeRepository;
 
-    public List<Attribute> GetCategoryAttributes(ProductCategory productCategory, boolean bGetAncestors) {
-        List<Attribute> attributes = attributeRepository.findAttributesByProductCategory(productCategory);
+    public List<Attribute> GetCategoryAttributes(Category Category, boolean bGetAncestors) {
+        List<Attribute> attributes = attributeRepository.findAttributesByCategory(Category);
 
-        if (productCategory.isInheritAttribute() && productCategory.getParent() != null && bGetAncestors == true) {
-            List<Attribute> parentAttributes = GetCategoryAttributes(productCategory.getParent(), bGetAncestors);
+        if (Category.isInheritAttribute() && Category.getParent() != null && bGetAncestors == true) {
+            List<Attribute> parentAttributes = GetCategoryAttributes(Category.getParent(), bGetAncestors);
 
             for (Attribute attribute: parentAttributes) {
                 if (!this.AttributesContains(attributes, attribute)) {
@@ -37,9 +38,9 @@ public class ProductCategoryService {
 
     public List<Attribute> GetCategoryAttributes(Long categoryId, boolean bGetAncestors) {
 
-        ProductCategory productCategory = productCategoryRepository.findById(categoryId).orElseThrow(EntityNotFoundException::new);
+        Category Category = CategoryRepository.findById(categoryId).orElseThrow(EntityNotFoundException::new);
 
-        return GetCategoryAttributes(productCategory, bGetAncestors);
+        return GetCategoryAttributes(Category, bGetAncestors);
 
     }
 
