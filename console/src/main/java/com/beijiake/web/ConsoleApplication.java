@@ -46,7 +46,7 @@ public class ConsoleApplication {
             Logger logger = LoggerFactory.getLogger(getClass());
 
             try {
-                ResponseEntity<String> result = restTemplate.getForEntity("http://localhost:9001/authority/categories", String.class);
+                ResponseEntity<String> result = restTemplate.getForEntity("http://localhost:9001/api/categories", String.class);
             }
             catch(HttpStatusCodeException e) {
                 logger.error(e.getResponseBodyAsString());

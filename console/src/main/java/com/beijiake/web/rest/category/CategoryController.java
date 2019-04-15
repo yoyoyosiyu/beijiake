@@ -69,21 +69,25 @@ public class CategoryController {
      * 在指定的分类下面添加分类，支持添加多个分类
      */
     @PostMapping("/{id}")
-    public  Set<Category> addCategory(@PathVariable(name="id")Long id, @RequestBody Set<Category> categories) {
+    public  List<Category> addCategory(@PathVariable(name="id")Long id, @RequestBody List<Category> categories) {
 
-        if (categories.isEmpty()) return Collections.emptySet();
+//        if (categories.isEmpty()) return Collections.emptySet();
+//
+//        Category productCategory = categoryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+//
+//        Set<Category> results = new HashSet<>();
+//
+//        categories.forEach((category) ->{
+//            category.setParent(productCategory);
+//            category.setChildren(Collections.emptySet());
+//            results.add(categoryRepository.save(category));
+//        });
+//
+//        return results;
 
-        Category productCategory = categoryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        categoryService.addCategories(id, categories);
 
-        Set<Category> results = new HashSet<>();
-
-        categories.forEach((category) ->{
-            category.setParent(productCategory);
-            category.setChildren(Collections.emptySet());
-            results.add(categoryRepository.save(category));
-        });
-
-        return results;
+        return categories;
 
     }
 
@@ -98,33 +102,11 @@ public class CategoryController {
     @DeleteMapping("/{id}")
     public void doDeleteCategory(@PathVariable Long id, @RequestParam(name="recurse", required = false, defaultValue = "false") boolean recurse) {
 
-        deleteCategory(id, recurse);
+        //deleteCategory(id, recurse);
 
     }
 
-    private void deleteCategory(Long id, boolean recurse) {
 
-        Category productCategory =  categoryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-
-        Set<Category> childCategories = productCategory.getChildren();
-
-        if (childCategories == null || childCategories.isEmpty())
-        {
-            categoryRepository.delete(productCategory);
-            return;
-        }
-
-        if (recurse == false) {
-            throw new ReferenceViolationException("The category hove more than one child, so remove all childes before delete current category");
-        }
-
-        childCategories.forEach((category) -> {
-            deleteCategory(category.getId(), recurse);
-        });
-
-        categoryRepository.delete(productCategory);
-
-    }
 
     @RequestMapping("/{id}/children")
     public List<CategoryView> doGetChildren(@PathVariable Long id){

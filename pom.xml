@@ -11,7 +11,7 @@
 
     <modules>
         <module>author_server</module>
-        <module>apps_services</module>
+        <module>api_server</module>
         <module>console</module>
         <module>console_services</module>
         <module>resource-server-test</module>

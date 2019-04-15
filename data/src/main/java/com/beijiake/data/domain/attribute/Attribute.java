@@ -17,7 +17,7 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(exclude = "category")
 @Entity
-@Table(name = "attributes", uniqueConstraints = {@UniqueConstraint(columnNames = {"category_id", "name"})})
+@Table(name = "attributes", uniqueConstraints = {@UniqueConstraint(columnNames = {"category_id", "name", "type"})})
 public class Attribute {
 
     @Id
@@ -31,6 +31,10 @@ public class Attribute {
     @Column
     String name;
 
+    @Column
+    @ColumnDefault("0")
+    Integer type;
+
 
     @OneToMany(mappedBy = "attribute")
     @JsonManagedReference
@@ -43,9 +47,19 @@ public class Attribute {
     @ColumnDefault("true")
     boolean required;
 
+    /**
+     * 是否可以由用户自己输入值
+     */
     @Column
     @ColumnDefault("false")
     boolean customizable;
 
+
+    /**
+     * 单值还是多值
+     */
+    @Column
+    @ColumnDefault("true")
+    boolean multiValue;
 
 }
